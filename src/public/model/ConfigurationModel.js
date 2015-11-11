@@ -1,5 +1,3 @@
-
-
 var ConfigurationModel = Backbone.Model.extend({
 	defaults: {
 		openConfig: false
@@ -29,7 +27,7 @@ var ConfigurationModel = Backbone.Model.extend({
 		var self = this;
 		ConfigurationCollection.reset();
 		this.configuration_result().done(function(result) {
-			console.log('result',result)
+			// console.log('result',result)
 			for (var r in result) {
 				var data = new ConfigurationViewModel({
 					number: result["account"][0]["Number"],
@@ -38,7 +36,8 @@ var ConfigurationModel = Backbone.Model.extend({
 					regions : result["account"][0]["Regions"],
 					bucketName : result["account"][0]["S3BucketName"],
 					URL : result["account"][0]["DB_URL"],
-					balanceExp : result["account"][0]["BalanceExp"]
+					balanceExp : result["account"][0]["BalanceExp"],
+					creditsUsed : result["account"][0]["creditsUsed"]
 				});
 				ConfigurationCollection.add(data);
 			}
@@ -48,16 +47,50 @@ var ConfigurationModel = Backbone.Model.extend({
 		});
 	},
 	setBalance: function(data) {
-		console.log('wtf',data);
 		var self = this;
 		return $.ajax({
 			type: 'POST',
-			data: JSON.stringify(data),
+			data: JSON.stringify({"balance" : data}),
+			url: '/setBalance',
+			dataType : 'json',
 			contentType: 'application/json',
-			url: 'http://localhost:3000/setBalance',
 			success: function(data) {
-				console.log('success');
-				console.log(JSON.stringify(data));
+				self.set('balanceDataReady', Date.now());
+			},
+			error: function(data){
+			}
+		});
+	},
+	setCreditsUsed: function(data) {
+		var self = this;
+		return $.ajax({
+			type: 'POST',
+			data: JSON.stringify({"used" : data}),
+			url: '/setCreditsUsed',
+			contentType: 'application/json',
+			dataType : 'json',
+			success: function(data) {
+				self.set('UsedCreditsDataReady', Date.now());
+			},
+			error: function(data){
+				console.log(data);
+			}
+		});
+	},
+	setExpiration: function(data) {
+		var self = this;
+		return $.ajax({
+			type: 'POST',
+			url: '/setExpiration',
+			data: JSON.stringify({'expiration' : data}),
+			contentType: 'application/json',
+			dataType : 'json',
+			success: function(data) {
+				// console.log('success');
+				self.set('expirationDataReady', Date.now());
+			},
+			error: function(data){
+				// console.log(data);
 			}
 		});
 	}

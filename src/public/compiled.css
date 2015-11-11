@@ -12,9 +12,7 @@ body {
 }
 .content-view {
   position: relative;
-  display: block;
   top: 48px;
-  margin: 0 auto;
   overflow-y: scroll;
 }
 .custom-menu {
@@ -42,7 +40,6 @@ ul {
 }
 .AWSView {
   margin: 0 auto;
-  min-height: 350px;
   width: 1060px;
   margin-top: 70px;
   margin-bottom: 70px;
@@ -169,9 +166,7 @@ div#networkContainer {
   clear: both;
 }
 .ProductCostView {
-  margin: 0 auto;
   width: 1060px;
-  background-color: white;
 }
 div#productcostcontainer {
   margin-top: 20px;
@@ -238,6 +233,10 @@ th {
 .dataTables_filter,
 .dataTables_paginate {
   font-size: 11px;
+}
+.title {
+  margin-right: 20px;
+  margin-left: 20px;
 }
 th,
 td {
@@ -365,12 +364,17 @@ td {
   z-index: 5;
 }
 .FooterView {
-  position: relative;
+  margin: 0 auto;
   background-color: #f7f7f7;
-  /*background-color: red;*/
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ffffff));
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #ffffff);
+  background-image: -moz-linear-gradient(top, #f7f7f7, #ffffff);
+  background-image: -o-linear-gradient(top, #f7f7f7, #ffffff);
+  background-image: linear-gradient(to bottom, #f7f7f7, #ffffff);
   border-top: 1px solid #ccc;
   bottom: 0;
-  width: 100%;
+  left: 0;
+  width: 1060px;
   height: 48px;
   /* Height of the footer */
 }
@@ -487,14 +491,14 @@ div#awsoperationscontainer {
 .usage {
   float: left;
   padding-left: 10px;
-  width: 70px;
+  width: 100px;
 }
 .usage:hover {
   color: orange;
 }
 .balance {
   float: left;
-  padding-left: 10px;
+  padding-left: 25px;
   width: 75px;
 }
 .balance:hover {
@@ -601,9 +605,22 @@ div#serviceContainer {
   width: 100%;
   padding-left: 5px;
 }
+.incontainer input[type="text"] {
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  border: 1px solid #f2f2f2;
+  border-radius: 5px;
+  background: #f2f2f2;
+  height: 30px;
+  width: 100%;
+  padding-left: 5px;
+}
 .incontainer .hidden {
   display: none;
   padding: 0;
+}
+.tooltip {
+  position: relative;
 }
 .budget-label {
   display: inline-block;
@@ -730,15 +747,16 @@ div#serviceContainer {
   position: fixed;
   background: #f7f7f7;
   border: 1px solid #ccc;
-  top: 65px;
-  right: 150px;
-  width: 200px;
+  top: 50px;
+  right: 165px;
+  width: 500px;
   height: 500px;
+  overflow-y: scroll;
 }
 .NotificationView.visible .notification-content:after,
 .NotificationView.visible .notification-content:before {
   bottom: 100%;
-  left: 70%;
+  left: 90%;
   border: solid transparent;
   content: " ";
   height: 0;
@@ -804,4 +822,10 @@ div#serviceContainer {
   border-bottom: 1px solid #aaa;
   border-top: 1px solid #aaa;
   /*border: 1px solid gray;*/
+}
+.TimeView {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  font-size: 10px;
 }

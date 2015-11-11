@@ -15,24 +15,37 @@ var ConfigurationView = Backbone.View.extend({
             s3BucketRegion: null,
             bucketName : null,
             URL: null,
-            balanceExp: null
+            balanceExp: null,
+            credutsUsed: null
         };
 
     },
 
     bindings: function() {
         this.model.change('openConfig', function(model, val) {
-            console.log(ConfigurationCollection)
             this.render();
         }.bind(this));
 
-        // this.$el.on('focusout', '#myCredits', function(e){
-        //  var self = this;
-        //      console.log($(input:mdl-textfield[id=myCredits]).val());            
-        // }).bind(this);
+        this.$el.on('click', '#saveConfig', function(e) {
+            this.model.setExpiration(this.data.expiration);
+            this.model.setCreditsUsed(this.data.used);
+            this.model.setBalance(this.data.balance);
+        }.bind(this));
 
+        this.$el.on('focusout', '#expDate', function(e) {
+            this.data.expiration = $('#expDate').val();
 
+        }.bind(this));
 
+        this.$el.on('focusout', '#myCredits', function(e) {
+            this.data.balance = $('#myCredits').val();
+
+        }.bind(this));
+
+        this.$el.on('focusout', '#creditsUsed', function(e) {
+            this.data.used = $('#creditsUsed').val();
+
+        }.bind(this));
     },
 
     render: function() {

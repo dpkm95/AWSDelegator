@@ -1,8 +1,15 @@
+/*
+    This file derived information from the designated S3 bucket which holds
+    hourly billing information in a .csv file. 
+    The csv file is parsed and inserted into a database collection hourly.
+ */
 var fs = require("fs");
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 
-// parses latestBills.csv and updates the 'awsdb' database with new bills.
+/*
+    parses latestBills.csv and updates the 'awsdb' database with new bills.
+ */
 exports.parseBillingCSV = function(callback) {
     MongoClient.connect(databaseUrl, function(err, db) {
         if (err) throw err;
@@ -91,8 +98,19 @@ exports.parseBillingCSV = function(callback) {
                                     doc['NonFreeRate'] = pricing['Requests-Tier1'].Price;
                                 } else if (/Requests-Tier2/.test(doc['UsageType'])) {
                                     doc['NonFreeRate'] = pricing['Requests-Tier2'].Price;
+                                } else if (/RDS:StorageIOUsage/.test(doc['UsageType'])) {
+                                    doc['NonFreeRate'] = pricing['RDS:StorageIOUsage'].Price;
+                                } else if (/InstanceUsage:db.t2.micro/.test(doc['UsageType'])) {
+                                    doc['NonFreeRate'] = pricing['InstanceUsage:db.t2.micro'].Price;
+                                } else if (/RDS:StorageUsage/.test(doc['UsageType'])) {
+                                    doc['NonFreeRate'] = pricing['RDS:StorageUsage'].Price;
                                 } else {
-                                    doc['NonFreeRate'] = pricing[doc['UsageType']].Price;
+                                    //error checking
+                                    if(pricing[doc['UsageType']] == undefined) {
+                                        console.log("doc['UsageType']==",doc['UsageType']);
+                                    } else {
+                                        doc['NonFreeRate'] = pricing[doc['UsageType']].Price;
+                                    }
                                 }
                                 doc['NonFreeCost'] = doc['UsageQuantity'] * doc['NonFreeRate'];
                             }
@@ -112,7 +130,11 @@ exports.parseBillingCSV = function(callback) {
                                 callback1();
                             }, 0);
                         }
-                    } else callback1();
+                    } else {
+                        setTimeout(function() {
+                                callback1();
+                            }, 0);
+                    }
                 };
                 controller1();
             });

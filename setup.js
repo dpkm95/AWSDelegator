@@ -39,7 +39,7 @@ var setupServer = function() {
                             console.log('Setup script completed, You may now start the server');
                             process.exit(0);
                         });
-                    })
+                    });
                 });
             });
         });
@@ -63,7 +63,8 @@ var setupDatabase = function(callback) {
         });
         db.collection('usageMeter').save({
             _id: '1',
-            time: _time
+            time: '2015-01-01 00:00:00'
+            // time: _time 
         });
         require('./src/server/model/ec2');
         require('./src/server/model/rds');
@@ -189,7 +190,7 @@ var parseBills = function(callback) {
                             });
 
                             // parseBillingCSVUsersGroups(function() {
-                                billingParser.parseBillingCSV(function() {
+                            billingParser.parseBillingCSV(function() {
                                 _callback();
                             });
                         });

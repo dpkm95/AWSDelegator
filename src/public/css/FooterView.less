@@ -1,12 +1,20 @@
 .FooterView {
-	// margin: 0 auto;
+	margin: 0 auto;
 	// height: 68px;
-	position: relative;
+	// position: fixed;
+	// background-color: #f7f7f7;
 	background-color: #f7f7f7;
-	/*background-color: red;*/
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ffffff));
+	background-image: -webkit-linear-gradient(top, #f7f7f7, #ffffff);
+	background-image:    -moz-linear-gradient(top, #f7f7f7, #ffffff);
+	background-image:      -o-linear-gradient(top, #f7f7f7, #ffffff);
+	background-image:         linear-gradient(to bottom, #f7f7f7, #ffffff);
+	// background-color: red;
 	border-top: 1px solid #ccc;
    bottom:0;
-   width:100%;
+   left: 0;
+   // right: 0;
+   width:@mainWidth;
    height:48px;   /* Height of the footer */
-
+   // float: left;
 }

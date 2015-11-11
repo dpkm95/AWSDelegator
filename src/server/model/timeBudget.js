@@ -8,8 +8,8 @@ timeBudgetSchema = new mongoose.Schema({
 	TimeAmount: Number,
 	uDecayRate: Number,
 	oDecayRate: Number,
-	minDBConnections: Number,
-	maxDBConnections: Number,
+	minDB: Number,
+	maxDB: Number,
 	TimeOut: String,
 	State: String
 });
